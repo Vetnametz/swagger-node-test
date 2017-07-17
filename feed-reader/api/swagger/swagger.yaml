@@ -1,0 +1,90 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Feed Reader App
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /login:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: login
+    get:
+      description: Returns '200' to the caller if params hase "username" of type String
+      # used as the method name of the controller
+      operationId: login
+      parameters:
+        - name: username
+          in: query
+          description: allows a simulated login, but no real authentication
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/LoginResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /registerFeed:
+      # binds a127 app logic to a route
+      x-swagger-router-controller: crudFeed
+      post:
+        description: Add new feed
+        # used as the method name of the controller
+        operationId: registerFeed
+        parameters:
+          - name: feed
+            in: body
+            description: object to create newfeed
+            schema:
+              type: object
+              required:
+                - userName
+                - title
+              properties:
+                userName:
+                  type: string
+                title:
+                  type: string
+                URL:
+                  type: string
+        responses:
+          "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/RegisterFeedResponse"
+          # responses may fall through to errors
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  LoginResponse:
+    description: User was logged in.
+  RegisterFeedResponse:
+    description: Feed was created.
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
