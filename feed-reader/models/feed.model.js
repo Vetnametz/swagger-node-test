@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 
 const feedSchema = mongoose.Schema({
   title:         {type: String},
-  content:       {type: String},
+  articles:       [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'Article'
+  }],
   dateCreated:   {
     type: Date,
     default: Date.now
