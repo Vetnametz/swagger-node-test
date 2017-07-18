@@ -38,5 +38,27 @@ describe('controllers', function() {
     });
 
   });
+  
+  describe('registerFeed', function() {
+    
+    describe('POST /registerFeed', function() {
+      
+      it('should return a saved feed ', function(done) {
+        
+        request(server)
+        .get('/login')
+        .param({ username: 'Scott', title: 'test_1', URL: '/link/url'})
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          should.not.exist(err);
+          done();
+        });
+      });
+      
+    });
+    
+  });
 
 });

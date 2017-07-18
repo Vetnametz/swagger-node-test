@@ -42,28 +42,16 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
   /registerFeed:
-      # binds a127 app logic to a route
-      x-swagger-router-controller: crudFeed
+      x-swagger-router-controller: feed.methods
       post:
         description: Add new feed
-        # used as the method name of the controller
         operationId: registerFeed
         parameters:
           - name: feed
             in: body
             description: object to create newfeed
             schema:
-              type: object
-              required:
-                - userName
-                - title
-              properties:
-                userName:
-                  type: string
-                title:
-                  type: string
-                URL:
-                  type: string
+              $ref: "#/definitions/Feed"
         responses:
           "200":
             description: Success
@@ -74,10 +62,64 @@ paths:
             description: Error
             schema:
               $ref: "#/definitions/ErrorResponse"
+  /feeds/fetch/{userName}:
+    x-swagger-router-controller: feed.methods
+    get:
+      description: Fetch feed definitions per user from the database.
+      operationId: fetchFeeds
+      parameters:
+        - in: path
+          name: userName
+          required: true
+          type: string
+          description: The user name.
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              type: object
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /feeds/{feedId}:
+    x-swagger-router-controller: feed.methods
+    delete:
+      description: Delete feeds by "_id" from the database.
+      operationId: deleteFeed
+      parameters:
+        - in: path
+          name: feedId
+          required: true
+          type: string
+          description: Feed _id.
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
+  Feed:           # <----------
+    type: object
+    required:
+      - userName
+      - title
+    properties:
+      userName:
+        type: string
+      title:
+        type: string
+      URL:
+        type: string
   LoginResponse:
     description: User was logged in.
   RegisterFeedResponse:
