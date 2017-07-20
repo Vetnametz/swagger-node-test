@@ -5,7 +5,8 @@ const Article = require('../../models/article.model');
 module.exports = {
   registerFeed: registerFeed,
   fetchFeeds: fetchFeeds,
-  deleteFeed: deleteFeed
+  deleteFeed: deleteFeed,
+  updateFeedContents: updateFeedContents
 };
 
 /**
@@ -81,6 +82,8 @@ function deleteFeed(req, res) {
  * @param res
  */
 function updateFeedContents(req, res) {
+  console.log(`---updateFeedContents---`);
+  console.log(req.swagger.params.feedId.value);
   let newArticle = new Article({});
   Feed.findOne({_id: req.swagger.params.feedId.value}, (err, feed) => {
     if (err) {
