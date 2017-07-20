@@ -18,6 +18,8 @@
   },
   "scripts": {
     "start": "node app.js",
+    "swagger": "swagger project start",
+    "swagger-edit": "swagger project edit",
     "test": "swagger project test"
   }
 }

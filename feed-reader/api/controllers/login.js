@@ -27,7 +27,6 @@ module.exports = {
 
 function login(req, res) {
   // variables defined in the Swagger document can be referenced using req.swagger.params.{parameter_name}
-  console.log(req.swagger.params);
   let name = req.swagger.params.username.value;
   if (typeof name === 'string' && name.length > 0) {
     res.status(200).send({message: `User ${req.swagger.params.username.value}: was logged in.`});
