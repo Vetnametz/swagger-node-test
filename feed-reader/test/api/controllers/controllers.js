@@ -39,7 +39,7 @@ describe('controllers', function() {
 
   });
   
-  describe('crudFeed', function() {
+  describe('feed.methods', function() {
     
     describe('POST /registerFeed', function() {
       
