@@ -69,7 +69,39 @@ describe('controllers', function() {
           done();
         });
       });
+    });
+  
+    describe('GET /feeds/fetch/{userName}', function() {
+    
+      it('should accept a "Scott" as parameter and return user feeds', function(done) {
       
+        request(server)
+        .get('/feeds/fetch/Scott')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          should.not.exist(err);
+          should.exist(res.body[0].title);
+          done();
+        });
+      });
+    });
+  
+    describe('DELETE /feeds/{feedId}', function() {
+    
+      it('should accept a "feedId" as parameter and delete feed by id', function(done) {
+      
+        request(server)
+        .delete('/feeds/59707f6455408513f1342f11')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          should.not.exist(err);
+          done();
+        });
+      });
     });
     
   });
